@@ -1,10 +1,11 @@
 package Aplication;
 
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
+import domain.exception.DomainException;
 import entities.Reservation;
 
 public class Program {
@@ -29,11 +30,14 @@ public class Program {
 			checkIn = sdf.parse(sc.next());
 			System.out.print("Check-out date (dd/MM/yyy)");
 			checkOut = sdf.parse(sc.next());
+			reservation.updateDates(checkIn, checkOut);
 			System.out.println("Reservation: " + reservation);
 		}catch(ParseException e) {
 			System.out.println("Invalid date format");
-		}catch(IllegalArgumentException e) {
+		}catch(DomainException e) {
 			System.out.println("Error in reservation " + e.getMessage());
+		}catch(RuntimeException e) {
+			System.out.println("Error inexpected");
 		}
 		
 		sc.close();
